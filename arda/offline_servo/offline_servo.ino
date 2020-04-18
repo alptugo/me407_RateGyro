@@ -56,9 +56,6 @@ void loop()
             if(client.available() > 0)
               break;
             delay(my_delay);
-            my_delay -= 1;
-            if (my_delay == 0)
-              my_delay = my_delay_var.toInt();
 
       }
       
