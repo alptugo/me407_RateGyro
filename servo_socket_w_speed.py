@@ -10,7 +10,7 @@ def loop():
     global delay, do_i_go
     while 1:
         if do_i_go:
-            for step in range(40,120):
+            for step in range(60,120):
                 s.send((str(step)+"s").encode("UTF-8"))
                 time.sleep(delay/1000)
 
