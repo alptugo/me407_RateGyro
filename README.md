@@ -1,1 +1,1 @@
-This is the software part of our [ME407](http://courses.me.metu.edu.tr/courses/me407/) project on Middle East Technical University.
+This is the software part of our [ME407](http://courses.me.metu.edu.tr/courses/me407/) project on Middle East Technical University. The project aims to produce an educational gyroscope set-up that can be used as sensor and actuator, as well as having a stabilizer for rotation. Mechanical parts of the study are planned to be made public via Thingyverse, when the project reaches its end.
