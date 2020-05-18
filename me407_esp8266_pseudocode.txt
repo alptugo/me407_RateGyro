@@ -62,7 +62,7 @@ PWM = 0
 errorSpeedSum = 0
 attach time interrupt
 	every t seconds
-		curSpeed=c*t/magnetNumber
+		curSpeed=c*t/(magnetNumber*60)
 		errorSpeed =  flyWheelSpeed - curSpeed;
 		PWM = errorSpeed*kp + errorSpeedSum*ki + (errorSpeed - errorSpeedPre)*kd;
 		errorSpeedPre = errorSpeed
