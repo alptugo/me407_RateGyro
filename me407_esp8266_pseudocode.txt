@@ -36,16 +36,18 @@ WHILE True
 					servoPos += 1
 			drive servo to 90 degrees with slow speed
 			WRITE LOW on digital pin connected to motor driver enable pin
-			Kill flywheel thread (or detach interrupt)
+			Kill flywheel thread (or detach interrupts)
 		ELSE IF wifi input indicates stabilisation mode
 			flyWheelSpeed = Decode RPM part of wifi input
-			flywheelSpeedControl(flyWheelSpeed) in another thread (or with interrupts)
+			flywheelSpeedControl(flyWheelSpeed) or with interrupts
 			Decode corrector coefficients from wifi input
+			stepInterruptsAtc = False
 			WHILE no bytes on buffer 
 					readValue = READ analog channel
 					angleValue = readValue*k1+k2
-					stepPos = calculate PID step motor output using angleValue
-					
+					IF NOT stepInterrupts
+						stepPositionControl(angleValue)
+						stepInterruptsAtc = True
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Kill flywheel thread (or detach interrupts)
 ---------------------------------------------------------------------------------------
@@ -78,3 +80,5 @@ attach time interrupt
 
 ---------------------------------------------------------------------------------------
 END OF flywheelSpeedControl(wantedSpeed) FUNCTION
+
+stepPositionControl(position)
