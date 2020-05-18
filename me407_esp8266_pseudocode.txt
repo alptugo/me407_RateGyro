@@ -41,13 +41,10 @@ WHILE True
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed) or with interrupts
 			Decode corrector coefficients from wifi input
-			stepInterruptsAtc = False
 			WHILE no bytes on buffer 
 					readValue = READ analog channel
 					angleValue = readValue*k1+k2
-					IF NOT stepInterrupts
-						stepPositionControl(angleValue)
-						stepInterruptsAtc = True
+					stepPositionControl(angleValue)
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Kill flywheel thread (or detach interrupts)
 ---------------------------------------------------------------------------------------
@@ -81,4 +78,16 @@ attach time interrupt
 ---------------------------------------------------------------------------------------
 END OF flywheelSpeedControl(wantedSpeed) FUNCTION
 
-stepPositionControl(position)
+stepPositionControl(sensorAngle)
+	convert sensorAngle to moment
+	convert moment to angular acceleration
+	curAngle = convert angular acceleration to angle change
+	errorAngle =  -curAngle;
+		angle2drive = errorAngle*kp + errorAngleSum*ki + (errorAngle - errorAnglePre)*kd;
+		errorAnglePre = errorAngle
+		errorAngleSum += errorAngle
+		IF errorAngleSum >4000
+			errorSpeedSum = 4000
+		IF errorAngleSum <-4000
+			errorSpeedSum = -4000
+		Drive stepper motor (move stepPerRev / 360 * Angle steps)
