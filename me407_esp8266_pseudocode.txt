@@ -78,7 +78,8 @@ attach time interrupt
 ---------------------------------------------------------------------------------------
 END OF flywheelSpeedControl(wantedSpeed) FUNCTION
 
-stepPositionControl(sensorAngle)
+stepPositionControl(sensorAngle) FUNCTION
+---------------------------------------------------------------------------------------
 	convert sensorAngle to moment
 	convert moment to angular acceleration
 	curAngle = convert angular acceleration to angle change
@@ -91,3 +92,5 @@ stepPositionControl(sensorAngle)
 		IF errorAngleSum <-4000
 			errorSpeedSum = -4000
 		Drive stepper motor (move stepPerRev / 360 * Angle steps)
+---------------------------------------------------------------------------------------
+END OF stepPositionControl(sensorAngle)
