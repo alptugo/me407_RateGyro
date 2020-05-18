@@ -2,8 +2,8 @@ MAIN CODE ON MICROPROCESSOR
 ---------------------------------------------------------------------------------------
 Set up acces point
 WHILE True
-	IF client connected
-		Lock stepper motor (move one step with stepper library)
+	Lock stepper motor (move one step with stepper library)
+	WHILE client connected
 		READ wifi input
 		Decode wifi input
 		IF wifi input indicates sensor mode
@@ -48,6 +48,7 @@ WHILE True
 					stepPositionControl(angleValue)
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Detach flywheel and stepper interrupts
+	wait 1 second
 ---------------------------------------------------------------------------------------
 END OF MAIN CODE ON MICROPROCESSOR
 
@@ -84,8 +85,15 @@ IF NOT stepperInterrupSet
 	attach time interrupt for every t1 seconds (t is smaller than a second)
 		timer += t1
 	stepperInterrupSet = True
+theta_tot_1 = theta_const + theta_meas
+del_s_1 = sqrt(l_const^2 + l_arm^2 - 2*l_const*l_arm*cos(theta_tot_1))-l_used
+F_s_1 = k_system * del_s_1
+sin_s_1 = (l_const*sin(theta_tot_1) ) / (l_used + del_s_1)
+T_s_1=F_s_1*sin_s_1*l_arm
+theta_tot_1 = theta_const - theta_meas
+
 moment = convert sensorAngle to moment
-angularAcceleration = moment / systemInertia
+angularSpeed = moment / H * cos (sensorAngle)
 curAngle = 0.5 * angularAcceleration * timer^2
 timer = 0
 errorAngle =  -curAngle;
