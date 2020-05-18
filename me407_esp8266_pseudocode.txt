@@ -8,7 +8,7 @@ WHILE True
 		Decode wifi input
 		IF wifi input indicates sensor mode
 			flyWheelSpeed = Decode RPM part of wifi input
-			flywheelSpeedControl(flyWheelSpeed) in another thread (or with interrupts)
+			flywheelSpeedControl(flyWheelSpeed)
 			k1, k2 = Decode corrector coefficients from wifi input
 			WHILE no bytes on buffer 
 				readValue = READ analog channel
@@ -18,7 +18,7 @@ WHILE True
 			Detach flywheel interrupts
 		ELSE IF wifi input indicates calibration mode
 			flyWheelSpeed = Decode RPM part of wifi input
-			flywheelSpeedControl(flyWheelSpeed) in another thread (or with interrupts)
+			flywheelSpeedControl(flyWheelSpeed)
 			sensorValue=READ MEMS sensor
 			readValue = READ analog channel
 			SEND sensorValue and readValue
@@ -26,7 +26,7 @@ WHILE True
 			Detach flywheel interrupts
 		ELSE IF wifi input indicates actuation mode
 			flyWheelSpeed = Decode RPM part of wifi input
-			flywheelSpeedControl(flyWheelSpeed) in another thread (or with interrupts)
+			flywheelSpeedControl(flyWheelSpeed)
 			Decode servo speed part of wifi input
 			IF servo speed part is NOT null
 				servoPos=63
@@ -39,7 +39,7 @@ WHILE True
 			Detach flywheel interrupts
 		ELSE IF wifi input indicates stabilisation mode
 			flyWheelSpeed = Decode RPM part of wifi input
-			flywheelSpeedControl(flyWheelSpeed) or with interrupts
+			flywheelSpeedControl(flyWheelSpeed)
 			Decode corrector coefficients from wifi input
 			stepperInterrupSet = False
 			WHILE no bytes on buffer 
