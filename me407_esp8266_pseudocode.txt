@@ -90,7 +90,15 @@ del_s_1 = sqrt(l_const^2 + l_arm^2 - 2*l_const*l_arm*cos(theta_tot_1))-l_used
 F_s_1 = k_system * del_s_1
 sin_s_1 = (l_const*sin(theta_tot_1) ) / (l_used + del_s_1)
 T_s_1=F_s_1*sin_s_1*l_arm
-theta_tot_1 = theta_const - theta_meas
+theta_tot_2 = theta_const - theta_meas
+del_s_2 = sqrt(l_const^2 + l_arm^2 - 2*l_const*l_arm*cos(theta_tot_2))-l_used
+IF del_s_2 >0
+	F_s_2 = k_system * del_s_2
+ELSE 
+	F_s_2 = 0
+sin_s_2 = (l_const*sin(theta_tot_2) ) / (l_used + del_s_2)
+T_s_2=F_s_2*sin_s_2*l_arm
+T_calculated=T_s_1 - T_s_2
 
 moment = convert sensorAngle to moment
 angularSpeed = moment / H * cos (sensorAngle)
