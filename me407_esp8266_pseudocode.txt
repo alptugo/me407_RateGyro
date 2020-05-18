@@ -3,6 +3,7 @@ MAIN CODE ON MICROPROCESSOR
 Set up acces point
 WHILE True
 	IF client connected
+		Lock stepper motor (move one step with stepper library)
 		READ wifi input
 		Decode wifi input
 		IF wifi input indicates sensor mode
