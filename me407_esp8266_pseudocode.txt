@@ -17,16 +17,16 @@ WHILE True
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Kill flywheel thread (or detach interrupt)
 		ELSE IF wifi input indicates calibration mode
-			Decode RPM part of wifi input
-			Start PID flywheel speed control in another thread (or with interrupts)
+			flyWheelSpeed = Decode RPM part of wifi input
+			flywheelSpeedControl(flyWheelSpeed) in another thread (or with interrupts)
 			sensorValue=READ MEMS sensor
 			readValue = READ analog channel
 			SEND sensorValue and readValue
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Kill flywheel thread (or detach interrupt)
 		ELSE IF wifi input indicates actuation mode
-			Decode RPM part of wifi input
-			Start PID flywheel speed control in another thread (or with interrupts)
+			flyWheelSpeed = Decode RPM part of wifi input
+			flywheelSpeedControl(flyWheelSpeed) in another thread (or with interrupts)
 			Decode servo speed part of wifi input
 			IF servo speed part is NOT null
 				servoPos=63
@@ -38,8 +38,8 @@ WHILE True
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Kill flywheel thread (or detach interrupt)
 		ELSE IF wifi input indicates stabilisation mode
-			Decode RPM part of wifi input
-			Start PID flywheel speed control in another thread (or with interrupts)
+			flyWheelSpeed = Decode RPM part of wifi input
+			flywheelSpeedControl(flyWheelSpeed) in another thread (or with interrupts)
 			Decode corrector coefficients from wifi input
 			WHILE no bytes on buffer 
 					readValue = READ analog channel
@@ -52,7 +52,7 @@ WHILE True
 END OF MAIN CODE ON MICROPROCESSOR
 
 
-flywheelSpeedControl(flyWheelSpeed) FUNCTION
+flywheelSpeedControl(wantedSpeed) FUNCTION
 ---------------------------------------------------------------------------------------
 attach interrupt to Hall Effect sensor pin
 	each time that pin READs HIGH
@@ -63,7 +63,7 @@ errorSpeedSum = 0
 attach time interrupt
 	every t seconds
 		curSpeed = c * 60 / (magnetNumber * t)
-		errorSpeed =  flyWheelSpeed - curSpeed;
+		errorSpeed =  wantedSpeed - curSpeed;
 		PWM = errorSpeed*kp + errorSpeedSum*ki + (errorSpeed - errorSpeedPre)*kd;
 		errorSpeedPre = errorSpeed
 		errorSpeedSum += errorSpeed
@@ -77,4 +77,4 @@ attach time interrupt
 		c = 0
 
 ---------------------------------------------------------------------------------------
-END OF flywheelSpeedControl(flyWheelSpeed) FUNCTION
+END OF flywheelSpeedControl(wantedSpeed) FUNCTION
