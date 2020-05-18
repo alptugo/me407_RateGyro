@@ -80,8 +80,8 @@ END OF flywheelSpeedControl(wantedSpeed) FUNCTION
 
 stepPositionControl(sensorAngle) FUNCTION
 ---------------------------------------------------------------------------------------
-	convert sensorAngle to moment
-	convert moment to angular acceleration
+	moment = convert sensorAngle to moment
+	angularAcceleration = moment / systemInertia
 	curAngle = convert angular acceleration to angle change
 	errorAngle =  -curAngle;
 		angle2drive = errorAngle*kp + errorAngleSum*ki + (errorAngle - errorAnglePre)*kd;
@@ -93,4 +93,4 @@ stepPositionControl(sensorAngle) FUNCTION
 			errorSpeedSum = -4000
 		Drive stepper motor (move stepPerRev / 360 * Angle steps)
 ---------------------------------------------------------------------------------------
-END OF stepPositionControl(sensorAngle)
+END OF stepPositionControl(sensorAngle) FUNCTION
