@@ -51,27 +51,29 @@ WHILE True
 END OF MAIN CODE ON MICROPROCESSOR
 
 
-flywheelSpeedControl(RPM) FUNCTION
+flywheelSpeedControl(wantedSpeed) FUNCTION
 ---------------------------------------------------------------------------------------
 attach interrupt to Hall Effect sensor pin
-	each time that pin READs HIGH, c+=1
-set time interrupt
-	every t seconds
-		curSpeed=c*t/10
+	each time that pin READs HIGH
+		c+=1
 WRITE driver enable pin to HIGH
-WHILE True
-	pwmSignal=PIDControl(RPM, curSpeed)
-	WRITE pwmSignal on driver pin
-	
-	
-	  //PID program
-   if (motor_start){
-     e_speed = set_speed - pv_speed;
-     pwm_pulse = e_speed*kp + e_speed_sum*ki + (e_speed - e_speed_pre)*kd;
-     e_speed_pre = e_speed;  //save last (previous) error
-     e_speed_sum += e_speed; //sum of error
-     if (e_speed_sum >4000) e_speed_sum = 4000;
-     if (e_speed_sum <-4000) e_speed_sum = -4000;
-   }
+PWM = 0
+errorSpeedSum = 0
+attach time interrupt
+	every t seconds
+		curSpeed=c*t/magnetNumber
+		errorSpeed =  wantedSpeed - curSpeed;
+		PWM = errorSpeed*kp + errorSpeedSum*ki + (errorSpeed - errorSpeedPre)*kd;
+		errorSpeedPre = errorSpeed
+		errorSpeedSum += errorSpeed
+		IF errorSpeedSum >4000
+			errorSpeedSum = 4000
+		IF errorSpeedSum <-4000
+			errorSpeedSum = -4000
+		IF PWM > 255
+			PWM = 255
+		WRITE PWM on DC motor driver pin
+		c = 0
+
 ---------------------------------------------------------------------------------------
-END OF flywheelSpeedControl(RPM) FUNCTION
+END OF flywheelSpeedControl(wantedSpeed) FUNCTION
