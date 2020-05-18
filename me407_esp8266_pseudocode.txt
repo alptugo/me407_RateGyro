@@ -102,6 +102,7 @@ T_s_2=F_s_2*sin_s_2*l_arm
 T_calculated=T_s_1 - T_s_2
 
 moment = convert sensorAngle to moment
+H = I_flywheel * curSpeed
 angularSpeed = moment / H * cos (sensorAngle)
 curAngle = 0.5 * angularAcceleration * timer^2
 timer = 0
