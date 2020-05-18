@@ -15,7 +15,7 @@ WHILE True
 				angleValue = readvalue*k1+k2
 				SEND angleValue
 			WRITE LOW on digital pin connected to motor driver enable pin
-			Kill flywheel thread (or detach interrupt)
+			Detach flywheel interrupts
 		ELSE IF wifi input indicates calibration mode
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed) in another thread (or with interrupts)
@@ -23,7 +23,7 @@ WHILE True
 			readValue = READ analog channel
 			SEND sensorValue and readValue
 			WRITE LOW on digital pin connected to motor driver enable pin
-			Kill flywheel thread (or detach interrupt)
+			Detach flywheel interrupts
 		ELSE IF wifi input indicates actuation mode
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed) in another thread (or with interrupts)
@@ -36,7 +36,7 @@ WHILE True
 					servoPos += 1
 			drive servo to 90 degrees with slow speed
 			WRITE LOW on digital pin connected to motor driver enable pin
-			Kill flywheel thread (or detach interrupts)
+			Detach flywheel interrupts
 		ELSE IF wifi input indicates stabilisation mode
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed) or with interrupts
@@ -47,7 +47,7 @@ WHILE True
 					angleValue = readValue*k1+k2
 					stepPositionControl(angleValue)
 			WRITE LOW on digital pin connected to motor driver enable pin
-			Kill flywheel thread (or detach interrupts)
+			Detach flywheel and stepper interrupts
 ---------------------------------------------------------------------------------------
 END OF MAIN CODE ON MICROPROCESSOR
 
