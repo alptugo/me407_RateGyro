@@ -41,6 +41,7 @@ WHILE True
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed) or with interrupts
 			Decode corrector coefficients from wifi input
+			stepperInterrupSet = False
 			WHILE no bytes on buffer 
 					readValue = READ analog channel
 					angleValue = readValue*k1+k2
@@ -59,43 +60,42 @@ attach interrupt to Hall Effect sensor pin
 WRITE driver enable pin to HIGH
 PWM = 0
 errorSpeedSum = 0
-attach time interrupt
-	every t seconds
-		curSpeed = c * 60 / (magnetNumber * t)
-		errorSpeed =  wantedSpeed - curSpeed;
-		PWM = errorSpeed*kp + errorSpeedSum*ki + (errorSpeed - errorSpeedPre)*kd;
-		errorSpeedPre = errorSpeed
-		errorSpeedSum += errorSpeed
-		IF errorSpeedSum >4000
-			errorSpeedSum = 4000
-		IF errorSpeedSum <-4000
-			errorSpeedSum = -4000
-		IF PWM > 255
-			PWM = 255
-		WRITE PWM on DC motor driver pin
-		c = 0
+attach time interrupt for every t seconds
+	curSpeed = c * 60 / (magnetNumber * t)
+	errorSpeed =  wantedSpeed - curSpeed;
+	PWM = errorSpeed*kp + errorSpeedSum*ki + (errorSpeed - errorSpeedPre)*kd;
+	errorSpeedPre = errorSpeed
+	errorSpeedSum += errorSpeed
+	IF errorSpeedSum >4000
+		errorSpeedSum = 4000
+	IF errorSpeedSum <-4000
+		errorSpeedSum = -4000
+	IF PWM > 255
+		PWM = 255
+	WRITE PWM on DC motor driver pin
+	c = 0
 
 ---------------------------------------------------------------------------------------
 END OF flywheelSpeedControl(wantedSpeed) FUNCTION
 
 stepPositionControl(sensorAngle) FUNCTION
 ---------------------------------------------------------------------------------------
-	interruptSet = 0
-	set up time interrupt
-		every t1 seconds (t is smaller than a second)
-			timer += t1
-	moment = convert sensorAngle to moment
-	angularAcceleration = moment / systemInertia
-	curAngle = 0.5 * angularAcceleration * timer^2
-	timer = 0
-	errorAngle =  -curAngle;
-		angle2drive = errorAngle*kp + errorAngleSum*ki + (errorAngle - errorAnglePre)*kd;
-		errorAnglePre = errorAngle
-		errorAngleSum += errorAngle
-		IF errorAngleSum >4000
-			errorSpeedSum = 4000
-		IF errorAngleSum <-4000
-			errorSpeedSum = -4000
-		Drive stepper motor (move stepPerRev / 360 * Angle steps)
+IF NOT stepperInterrupSet
+	attach time interrupt for every t1 seconds (t is smaller than a second)
+		timer += t1
+	stepperInterrupSet = True
+moment = convert sensorAngle to moment
+angularAcceleration = moment / systemInertia
+curAngle = 0.5 * angularAcceleration * timer^2
+timer = 0
+errorAngle =  -curAngle;
+	angle2drive = errorAngle*kp + errorAngleSum*ki + (errorAngle - errorAnglePre)*kd;
+	errorAnglePre = errorAngle
+	errorAngleSum += errorAngle
+	IF errorAngleSum >4000
+		errorSpeedSum = 4000
+	IF errorAngleSum <-4000
+		errorSpeedSum = -4000
+	Drive stepper motor (move stepPerRev / 360 * Angle steps)
 ---------------------------------------------------------------------------------------
 END OF stepPositionControl(sensorAngle) FUNCTION
