@@ -80,9 +80,14 @@ END OF flywheelSpeedControl(wantedSpeed) FUNCTION
 
 stepPositionControl(sensorAngle) FUNCTION
 ---------------------------------------------------------------------------------------
+	interruptSet = 0
+	set up time interrupt
+		every t1 seconds (t is smaller than a second)
+			timer += t1
 	moment = convert sensorAngle to moment
 	angularAcceleration = moment / systemInertia
-	curAngle = convert angular acceleration to angle change
+	curAngle = 0.5 * angularAcceleration * timer^2
+	timer = 0
 	errorAngle =  -curAngle;
 		angle2drive = errorAngle*kp + errorAngleSum*ki + (errorAngle - errorAnglePre)*kd;
 		errorAnglePre = errorAngle
