@@ -52,7 +52,7 @@ WHILE True
 END OF MAIN CODE ON MICROPROCESSOR
 
 
-flywheelSpeedControl(wantedSpeed) FUNCTION
+flywheelSpeedControl(flyWheelSpeed) FUNCTION
 ---------------------------------------------------------------------------------------
 attach interrupt to Hall Effect sensor pin
 	each time that pin READs HIGH
@@ -63,7 +63,7 @@ errorSpeedSum = 0
 attach time interrupt
 	every t seconds
 		curSpeed=c*t/magnetNumber
-		errorSpeed =  wantedSpeed - curSpeed;
+		errorSpeed =  flyWheelSpeed - curSpeed;
 		PWM = errorSpeed*kp + errorSpeedSum*ki + (errorSpeed - errorSpeedPre)*kd;
 		errorSpeedPre = errorSpeed
 		errorSpeedSum += errorSpeed
@@ -77,4 +77,4 @@ attach time interrupt
 		c = 0
 
 ---------------------------------------------------------------------------------------
-END OF flywheelSpeedControl(wantedSpeed) FUNCTION
+END OF flywheelSpeedControl(flyWheelSpeed) FUNCTION
