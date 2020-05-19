@@ -2,14 +2,16 @@ MAIN CODE ON PYTHON GUI
 ---------------------------------------------------------------------------------------
 Initialize GUI
 WHILE True
+	IF NOT connected to server
+		connect to server
 	WHILE connected to server
 		IF sensor button is pressed
-			threadKiller()
+			IF sensorThread exists
+				KILL sensorThread
 			IF values in RPM and coefficient textboxes are in acceptable intervals
 				encode and send sensor flywheel speed and coefficients to server
 				START sensorThread
-					killSensor = False
-					WHILE NOT killSensor
+					WHILE STOP button is NOT pressed
 						receive sensor data from server
 						calculatedTorque = calculateTorque(RPM, sensorData)
 						log sensor data and calculatedTorque
@@ -18,55 +20,49 @@ WHILE True
 					BREAK the loop
 					
 			ELSE
-				set Warning textbox to "Missing/Incorrect Information"
+				set Warning textbox to "Missing/Incorrect information"
 				BREAK the loop
-		IF wifi input indicates calibration mode
-			flyWheelSpeed = Decode RPM part of wifi input
-			flywheelSpeedControl(flyWheelSpeed)
-			sensorValue=READ MEMS sensor
-			readValue = READ analog channel
-			SEND sensorValue and readValue
-			WRITE LOW on digital pin connected to motor driver enable pin
-			Detach flywheel interrupts
-		IF wifi input indicates actuation mode
-			flyWheelSpeed = Decode RPM part of wifi input
-			flywheelSpeedControl(flyWheelSpeed)
-			Decode servo speed part of wifi input
-			IF servo speed part is NOT null
-				servoPos=63
-				WHILE servoPos <117
-					drive servo to servoPos degrees
-					WAIT servoSpeed*tServo seconds.
-					servoPos += 1
-			drive servo to 90 degrees with slow speed
-			WRITE LOW on digital pin connected to motor driver enable pin
-			Detach flywheel interrupts
-		IF wifi input indicates stabilisation mode
-			flyWheelSpeed = Decode RPM part of wifi input
-			flywheelSpeedControl(flyWheelSpeed)
-			Decode corrector coefficients from wifi input
-			stepperInterrupSet = False
-			WHILE no bytes on buffer 
-				readValue = READ analog channel
-				angleValue = readValue*k1+k2
-				stepPositionControl(angleValue)
-			WRITE LOW on digital pin connected to motor driver enable pin
-			Detach flywheel and stepper interrupts
-			Lock stepper motor (move one step with stepper library)
+
+		IF calibration button is pressed
+			IF sensorThread exists
+				KILL sensorThread
+			IF value in RPM textbox is in acceptable interval
+				encode and send calibration mode and sensor flywheel speed to server
+				receive sensor and angle data from server
+				correctorCoefficients = calculateCoefficients(sensorData, angleData)
+				fill the texboxes with correctorCoefficients
+				BREAK the loop
+			
+			ELSE
+				set Warning textbox to "Missing/Incorrect information"
+				BREAK the loop	
+			
+			
+		IF actuator button is pressed
+			IF sensorThread exists
+				KILL sensorThread
+			IF values in RPM and required torque textboxes are in acceptable intervals
+				calculatedServoSpeed = calculateServoSpeed(RPM, requiredTorque)
+				IF calculatedServoSpeed is less than maximum allowable speed
+					show calculatedServoSpeed
+					encode and send actuator mode and calculatedServoSpeed to server
+					BREAK the loop
+					
+				ELSE
+					set Warning textbox to "Needed servo speed is out of bounds!"
+					BREAK the loop
+			ELSE
+				set Warning textbox to "Missing/Incorrect information"
+				BREAK the loop
+		
+		
+		IF stabilisation button is pressed
+			IF values in RPM and coefficient textboxes are in acceptable intervals
+				encode and send sensor flywheel speed and coefficients to server
+				
+			ELSE
+				set Warning textbox to "Missing/Incorrect information"
+
 ---------------------------------------------------------------------------------------
 END OF MAIN CODE ON PYTHON GUI
 
-threadKiller() FUNCTION
----------------------------------------------------------------------------------------
-IF sensorThread exists
-	killSensor = True
-IF calibrationThread exists
-	killCalibration = True
-IF actuatorThread exists
-	killActuator = True
-IF stabilisationThread exists
-	killStabilisattion = True
-
-
----------------------------------------------------------------------------------------
-END OF threadKiller() FUNCTION
