@@ -2,20 +2,25 @@ MAIN CODE ON PYTHON GUI
 ---------------------------------------------------------------------------------------
 Initialize GUI
 WHILE True
-	WHILE client connected
-		READ wifi input
-		Decode wifi input
-		IF wifi input indicates sensor mode
-			flyWheelSpeed = Decode RPM part of wifi input
-			flywheelSpeedControl(flyWheelSpeed)
-			k1, k2 = Decode corrector coefficients from wifi input
-			WHILE no bytes on buffer 
-				readValue = READ analog channel
-				angleValue = readvalue*k1+k2
-				SEND angleValue
-			WRITE LOW on digital pin connected to motor driver enable pin
-			Detach flywheel interrupts
-		ELSE IF wifi input indicates calibration mode
+	WHILE connected to server
+		IF sensor button is pressed
+			threadKiller()
+			IF values in RPM and coefficient textboxes are in acceptable intervals
+				encode and send sensor flywheel speed and coefficients to server
+				START sensorThread
+					killSensor = False
+					WHILE NOT killSensor
+						receive sensor data from server
+						calculatedTorque = calculateTorque(RPM, sensorData)
+						log sensor data and calculatedTorque
+						show calculatedTorque
+					plot sensor data and calculatedTorque
+					BREAK the loop
+					
+			ELSE
+				set Warning textbox to "Missing/Incorrect Information"
+				BREAK the loop
+		IF wifi input indicates calibration mode
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed)
 			sensorValue=READ MEMS sensor
@@ -23,7 +28,7 @@ WHILE True
 			SEND sensorValue and readValue
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Detach flywheel interrupts
-		ELSE IF wifi input indicates actuation mode
+		IF wifi input indicates actuation mode
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed)
 			Decode servo speed part of wifi input
@@ -36,7 +41,7 @@ WHILE True
 			drive servo to 90 degrees with slow speed
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Detach flywheel interrupts
-		ELSE IF wifi input indicates stabilisation mode
+		IF wifi input indicates stabilisation mode
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed)
 			Decode corrector coefficients from wifi input
@@ -50,3 +55,18 @@ WHILE True
 			Lock stepper motor (move one step with stepper library)
 ---------------------------------------------------------------------------------------
 END OF MAIN CODE ON PYTHON GUI
+
+threadKiller() FUNCTION
+---------------------------------------------------------------------------------------
+IF sensorThread exists
+	killSensor = True
+IF calibrationThread exists
+	killCalibration = True
+IF actuatorThread exists
+	killActuator = True
+IF stabilisationThread exists
+	killStabilisattion = True
+
+
+---------------------------------------------------------------------------------------
+END OF threadKiller() FUNCTION
