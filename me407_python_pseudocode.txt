@@ -17,13 +17,11 @@ WHILE True
 						log sensor data and calculatedAngularSpeed
 						show sensor data and calculatedAngularSpeed
 					plot sensor data and calculatedAngularSpeed
-					BREAK the loop
 					
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
-				BREAK the loop
 
-		IF calibration button is pressed
+		ELSE IF calibration button is pressed
 			IF sensorThread exists
 				KILL sensorThread
 			IF value in RPM textbox is in acceptable interval
@@ -31,27 +29,27 @@ WHILE True
 				receive sensor and angle data from server
 				correctorCoefficients = calculateCoefficients(RPM, sensorData, angleData)
 				fill the texboxes with correctorCoefficients
-				BREAK the loop
+				
 			
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
-				BREAK the loop	
+					
 			
 			
-		IF actuator button is pressed
+		ELSE IF actuator button is pressed
 			IF sensorThread exists
 				KILL sensorThread
 			IF values in RPM and required torque textboxes are in acceptable intervals
 
 				encode and send actuator mode, required torque and RPM to server
-				BREAK the loop
+				
 					
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
-				BREAK the loop
+				
 		
 		
-		IF stabilisation button is pressed
+		ELSE IF stabilisation button is pressed
 			IF values in RPM and coefficient textboxes are in acceptable intervals
 				encode and send sensor flywheel speed and coefficients to server
 				
