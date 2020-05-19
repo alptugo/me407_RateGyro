@@ -12,11 +12,11 @@ WHILE True
 				encode and send sensor flywheel speed and coefficients to server
 				START sensorThread
 					WHILE STOP button is NOT pressed
-						receive sensor data from server
-						calculatedTorque = calculateTorque(RPM, sensorData)
-						log sensor data and calculatedTorque
-						show calculatedTorque
-					plot sensor data and calculatedTorque
+						receive angle data from server
+						calculatedAngularSpeed = calculateAngularSpeed(RPM, angleData)
+						log sensor data and calculatedAngularSpeed
+						show sensor data and calculatedAngularSpeed
+					plot sensor data and calculatedAngularSpeed
 					BREAK the loop
 					
 			ELSE
@@ -66,3 +66,29 @@ WHILE True
 ---------------------------------------------------------------------------------------
 END OF MAIN CODE ON PYTHON GUI
 
+
+
+calculateAngularSpeed(curSpeed, theta_measured) FUNCTION
+---------------------------------------------------------------------------------------
+curSpeed *= pi / 30
+
+theta_total_1 = theta_const + theta_measured
+del_s_1 = sqrt(l_const^2 + l_arm^2 - 2*l_const*l_arm*cos(theta_total_1))-l_used
+F_s_1 = k_system * del_s_1
+sin_s_1 = (l_const*sin(theta_total_1) ) / (l_used + del_s_1)
+T_s_1=F_s_1*sin_s_1*l_arm
+theta_total_2 = theta_const - theta_measured
+del_s_2 = sqrt(l_const^2 + l_arm^2 - 2*l_const*l_arm*cos(theta_total_2))-l_used
+IF del_s_2 >0
+	F_s_2 = k_system * del_s_2
+ELSE 
+	F_s_2 = 0
+sin_s_2 = (l_const*sin(theta_total_2) ) / (l_used + del_s_2)
+T_s_2=F_s_2*sin_s_2*l_arm
+T_calculated=T_s_1 - T_s_2
+
+H = I_flywheel * curSpeed * pi / 30
+angularSpeed = moment / H * cos (theta_measured)
+return angularSpeed
+---------------------------------------------------------------------------------------
+END OF calculateAngularSpeed(ang_speed, angle) FUNCTION
