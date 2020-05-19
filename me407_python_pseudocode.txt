@@ -1,1 +1,52 @@
-
+MAIN CODE ON PYTHON GUI
+---------------------------------------------------------------------------------------
+Initialize GUI
+WHILE True
+	WHILE client connected
+		READ wifi input
+		Decode wifi input
+		IF wifi input indicates sensor mode
+			flyWheelSpeed = Decode RPM part of wifi input
+			flywheelSpeedControl(flyWheelSpeed)
+			k1, k2 = Decode corrector coefficients from wifi input
+			WHILE no bytes on buffer 
+				readValue = READ analog channel
+				angleValue = readvalue*k1+k2
+				SEND angleValue
+			WRITE LOW on digital pin connected to motor driver enable pin
+			Detach flywheel interrupts
+		ELSE IF wifi input indicates calibration mode
+			flyWheelSpeed = Decode RPM part of wifi input
+			flywheelSpeedControl(flyWheelSpeed)
+			sensorValue=READ MEMS sensor
+			readValue = READ analog channel
+			SEND sensorValue and readValue
+			WRITE LOW on digital pin connected to motor driver enable pin
+			Detach flywheel interrupts
+		ELSE IF wifi input indicates actuation mode
+			flyWheelSpeed = Decode RPM part of wifi input
+			flywheelSpeedControl(flyWheelSpeed)
+			Decode servo speed part of wifi input
+			IF servo speed part is NOT null
+				servoPos=63
+				WHILE servoPos <117
+					drive servo to servoPos degrees
+					WAIT servoSpeed*tServo seconds.
+					servoPos += 1
+			drive servo to 90 degrees with slow speed
+			WRITE LOW on digital pin connected to motor driver enable pin
+			Detach flywheel interrupts
+		ELSE IF wifi input indicates stabilisation mode
+			flyWheelSpeed = Decode RPM part of wifi input
+			flywheelSpeedControl(flyWheelSpeed)
+			Decode corrector coefficients from wifi input
+			stepperInterrupSet = False
+			WHILE no bytes on buffer 
+				readValue = READ analog channel
+				angleValue = readValue*k1+k2
+				stepPositionControl(angleValue)
+			WRITE LOW on digital pin connected to motor driver enable pin
+			Detach flywheel and stepper interrupts
+			Lock stepper motor (move one step with stepper library)
+---------------------------------------------------------------------------------------
+END OF MAIN CODE ON PYTHON GUI
