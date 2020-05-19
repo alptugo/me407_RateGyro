@@ -17,7 +17,6 @@ WHILE True
 						log sensor data and calculatedAngularSpeed
 						show sensor data and calculatedAngularSpeed
 					plot sensor data and calculatedAngularSpeed
-					
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
 
@@ -29,36 +28,24 @@ WHILE True
 				receive sensor and angle data from server
 				correctorCoefficients = calculateCoefficients(RPM, sensorData, angleData)
 				fill the texboxes with correctorCoefficients
-				
-			
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
-					
-			
-			
+
 		ELSE IF actuator button is pressed
 			IF sensorThread exists
 				KILL sensorThread
 			IF values in RPM and required torque textboxes are in acceptable intervals
-
 				encode and send actuator mode, required torque and RPM to server
-				
-					
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
-				
-		
 		
 		ELSE IF stabilisation button is pressed
 			IF values in RPM and coefficient textboxes are in acceptable intervals
 				encode and send sensor flywheel speed and coefficients to server
-				
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
-
 ---------------------------------------------------------------------------------------
 END OF MAIN CODE ON PYTHON GUI
-
 
 
 calculateAngularSpeed(curSpeed, theta_measured) FUNCTION
@@ -85,7 +72,6 @@ angularSpeed = moment / H * cos (theta_measured)
 return angularSpeed
 ---------------------------------------------------------------------------------------
 END OF calculateAngularSpeed(curSpeed, theta_measured) FUNCTION
-
 
 
 calculateCoefficients(curSpeed, sensorData, angleData) FUNCTION
