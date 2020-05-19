@@ -79,7 +79,7 @@ attach time interrupt for every t seconds
 END OF flywheelSpeedControl(wantedSpeed) FUNCTION
 
 
-stepPositionControl(sensorAngle) FUNCTION
+stepPositionControl(theta_measured) FUNCTION
 ---------------------------------------------------------------------------------------
 IF NOT stepperInterruptSet
 	attach time interrupt for every t1 seconds (t is smaller than a second)
@@ -101,7 +101,7 @@ T_s_2=F_s_2*sin_s_2*l_arm
 T_calculated=T_s_1 - T_s_2
 
 H = I_flywheel * curSpeed * pi / 30
-angularSpeed = moment / H * cos (sensorAngle)
+angularSpeed = moment / H * cos (theta_measured)
 curAngle = angularSpeed * timer
 timer = 0
 errorAngle =  -curAngle
