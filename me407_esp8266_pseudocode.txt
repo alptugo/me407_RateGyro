@@ -16,6 +16,7 @@ WHILE True
 				SEND angleValue
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Detach flywheel interrupts
+			
 		ELSE IF wifi input indicates calibration mode
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed)
@@ -24,12 +25,10 @@ WHILE True
 			SEND sensorValue and readValue
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Detach flywheel interrupts
+			
 		ELSE IF wifi input indicates actuation mode
-		
-		
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed)
-			
 			Decode required torque part of wifi input
 			currentPos = 63
 			WHILE currentServoPos < servoBoundary
@@ -39,11 +38,9 @@ WHILE True
 					currentPos += 1
 					drive servo to currentPos degrees
 					WAIT tServo / servoSpeed ms
-			
 			drive servo to 90 degrees with slow speed
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Detach flywheel interrupts
-			
 			
 		ELSE IF wifi input indicates stabilisation mode
 			flyWheelSpeed = Decode RPM part of wifi input
@@ -82,7 +79,6 @@ attach time interrupt for every t seconds
 		PWM = 255
 	WRITE PWM on DC motor driver pin
 	c = 0
-
 ---------------------------------------------------------------------------------------
 END OF flywheelSpeedControl(wantedSpeed) FUNCTION
 
@@ -107,7 +103,6 @@ ELSE
 sin_s_2 = (l_const*sin(theta_total_2) ) / (l_used + del_s_2)
 T_s_2=F_s_2*sin_s_2*l_arm
 T_calculated=T_s_1 - T_s_2
-
 H = I_flywheel * curSpeed * pi / 30
 angularSpeed = moment / H * cos (theta_measured)
 curAngle = angularSpeed * timer
