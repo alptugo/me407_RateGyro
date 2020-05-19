@@ -25,18 +25,26 @@ WHILE True
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Detach flywheel interrupts
 		ELSE IF wifi input indicates actuation mode
+		
+		
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed)
-			Decode servo speed part of wifi input
-			IF servo speed part is NOT null
-				servoPos=63
-				WHILE servoPos <117
-					drive servo to servoPos degrees
-					WAIT servoSpeed*tServo seconds.
-					servoPos += 1
+			
+			Decode required torque part of wifi input
+			currentPos = 63
+			WHILE currentServoPos < servoBoundary
+				servoSpeed = calculateServoSpeed(flyWheelSpeed, currentPos, requiredTorque)
+				prevServoPos = currentPos
+				WHILE currentPos < (prevServoPos + 3)
+					currentPos += 1
+					drive servo to currentPos degrees
+					WAIT tServo / servoSpeed ms
+			
 			drive servo to 90 degrees with slow speed
 			WRITE LOW on digital pin connected to motor driver enable pin
 			Detach flywheel interrupts
+			
+			
 		ELSE IF wifi input indicates stabilisation mode
 			flyWheelSpeed = Decode RPM part of wifi input
 			flywheelSpeedControl(flyWheelSpeed)
