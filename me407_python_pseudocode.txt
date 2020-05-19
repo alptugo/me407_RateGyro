@@ -9,7 +9,7 @@ WHILE True
 			IF sensorThread exists
 				KILL sensorThread
 			IF values in RPM and coefficient textboxes are in acceptable intervals
-				encode and send sensor flywheel speed and coefficients to server
+				encode and send sensor flywheel speed and coefficient to server
 				START sensorThread
 					WHILE STOP button is NOT pressed
 						receive angle data from server
@@ -26,8 +26,8 @@ WHILE True
 			IF value in RPM textbox is in acceptable interval
 				encode and send calibration mode and sensor flywheel speed to server
 				receive sensor and angle data from server
-				correctorCoefficients = calculateCoefficients(RPM, sensorData, angleData)
-				fill the texboxes with correctorCoefficients
+				correctorCoefficient = calculateCoefficient(RPM, sensorData, angleData)
+				fill the textbox with correctorCoefficient
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
 
@@ -41,7 +41,7 @@ WHILE True
 		
 		ELSE IF stabilisation button is pressed
 			IF values in RPM and coefficient textboxes are in acceptable intervals
-				encode and send sensor flywheel speed and coefficients to server
+				encode and send sensor flywheel speed and coefficient to server
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
 ---------------------------------------------------------------------------------------
@@ -72,9 +72,10 @@ return angularSpeed
 END OF calculateAngularSpeed(curSpeed, theta_measured) FUNCTION
 
 
-calculateCoefficients(curSpeed, sensorData, angleData) FUNCTION
+calculateCoefficient(curSpeed, sensorData, angleData) FUNCTION
 ---------------------------------------------------------------------------------------
 angSpeed = calculateAngularSpeed(curSpeed, angleData)
 coeff = sensorData / angSpeed
+return coeff
 ---------------------------------------------------------------------------------------
-END OF calculateCoefficients(curSpeed, sensorData, angleData) FUNCTION
+END OF calculateCoefficient(curSpeed, sensorData, angleData) FUNCTION
