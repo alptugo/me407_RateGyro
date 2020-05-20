@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-05-19T19:11:31.770Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36" etag="FXmEN7hj_YgtbWp8_UUK" version="13.1.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-05-20T16:06:32.745Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36" etag="bBJW0TkM5lb2HjaNwYgK" version="13.1.3" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1185" dy="594" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="868" dy="401" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -215,7 +215,7 @@
         <mxCell id="WC93vsiqhbo_KwTgu6uD-63" value="Send values (Sensor and analogueRead values)" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="682" y="430" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="WC93vsiqhbo_KwTgu6uD-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WC93vsiqhbo_KwTgu6uD-67" edge="1" target="umDlB7to00JSbgkOJ7BE-0">
+        <mxCell id="WC93vsiqhbo_KwTgu6uD-66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WC93vsiqhbo_KwTgu6uD-67" target="umDlB7to00JSbgkOJ7BE-0" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="522.0000000000002" y="580" as="targetPoint" />
           </mxGeometry>
@@ -373,13 +373,13 @@
         <mxCell id="WC93vsiqhbo_KwTgu6uD-151" value="Lock stepper motor" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="1050" y="765" width="90" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="umDlB7to00JSbgkOJ7BE-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="umDlB7to00JSbgkOJ7BE-0" target="WC93vsiqhbo_KwTgu6uD-76">
+        <mxCell id="umDlB7to00JSbgkOJ7BE-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="umDlB7to00JSbgkOJ7BE-0" target="WC93vsiqhbo_KwTgu6uD-76" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="umDlB7to00JSbgkOJ7BE-0" value="Calculate servo speed" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="umDlB7to00JSbgkOJ7BE-0" value="Calculate servo speed" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="522" y="550" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="umDlB7to00JSbgkOJ7BE-6" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="umDlB7to00JSbgkOJ7BE-3">
+        <mxCell id="umDlB7to00JSbgkOJ7BE-6" value="No" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="umDlB7to00JSbgkOJ7BE-3" edge="1">
           <mxGeometry x="-0.9784" y="-23" relative="1" as="geometry">
             <mxPoint x="500" y="580" as="targetPoint" />
             <Array as="points">
@@ -389,10 +389,10 @@
             <mxPoint x="22" y="18" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="umDlB7to00JSbgkOJ7BE-3" value="Is current &lt;br&gt;position of servo bigger than boundary?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="umDlB7to00JSbgkOJ7BE-3" value="Is current &lt;br&gt;position of servo bigger than boundary?" style="rhombus;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="842" y="525" width="112" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="umDlB7to00JSbgkOJ7BE-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WC93vsiqhbo_KwTgu6uD-76" target="umDlB7to00JSbgkOJ7BE-3">
+        <mxCell id="umDlB7to00JSbgkOJ7BE-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WC93vsiqhbo_KwTgu6uD-76" target="umDlB7to00JSbgkOJ7BE-3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="870" y="580" as="sourcePoint" />
             <mxPoint x="970" y="580" as="targetPoint" />
