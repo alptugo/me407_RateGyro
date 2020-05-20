@@ -41,7 +41,7 @@ WHILE True
 		
 		ELSE IF stabilisation button is pressed
 			IF values in RPM and coefficient textboxes are in acceptable intervals
-				encode and send sensor flywheel speed and coefficient to server
+				encode and send flywheel speed and coefficient to server
 			ELSE
 				set Warning textbox to "Missing/Incorrect information"
 ---------------------------------------------------------------------------------------
